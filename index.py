@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import csv
 
 base_url = "https://get.todoist.help"
 url = requests.get(base_url + "/hc/en-us/categories/115000626249")
@@ -29,3 +30,13 @@ for links in faq:
 
 
 print(links_and_sections)
+
+for key in links_and_sections:
+  with open(key + '.csv', 'w') as out:
+    file = csv.writer(out)
+    file.writerow(['link', 'heading'])
+
+    for row in links_and_sections[key]:
+      file.writerow([row[0], row[1]])
+
+print("Done")
